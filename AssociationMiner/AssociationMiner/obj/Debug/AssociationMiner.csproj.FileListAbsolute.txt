@@ -1,0 +1,2 @@
+c:\users\jbrel_000\documents\visual studio 2012\Projects\AssociationMiner\AssociationMiner\bin\Debug\AssociationMiner.exe.config
+C:\Users\jbrel_000\Documents\GitHub\SQL_LBMS\AssociationMiner\AssociationMiner\bin\Debug\AssociationMiner.exe.config
