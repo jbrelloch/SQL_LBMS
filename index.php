@@ -1,4 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<?php
+	session_start();
+	$userSet = false;	
+	
+	if (isset($_SESSION['mid'])){
+		$userSet = true; // user exists in session !!
+		$mid = $_SESSION['mid'];
+		$fname = $_SESSION['fname'];
+	}
+	echo $userSet;
+?>
 
 <html>
 <head>
@@ -38,7 +49,12 @@
 
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#">Book Cart</a></li>
-					<li><a href="#">Profile/Login</a></li>
+					<li>		
+					<?php echo ($userSet == true ? "You are logged in as '$fname' &nbsp; 
+					<a href=\"logout.php\">Logout</a>" : "<a href=\"registration.php\">Profile/Login</a>"); ?> 
+					</li>
+					
+					
 				</ul>
 
 	        </div>
@@ -50,7 +66,7 @@
 		<div class="page-header" id="banner">
 			<div class="row">
 				<div class="col-lg-6">
-					<h1>Library Manangement System</h1>
+					<h1>Library Manangement Systems</h1>
 					<p class="lead">Browse and Checkout Books</p>
 					<br/><br/>
 					<br/><br/>
