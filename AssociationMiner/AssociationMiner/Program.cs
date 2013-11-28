@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,63 +14,83 @@ namespace AssociationMiner
         private static Dictionary<int[], Double> aprioriResults = new Dictionary<int[], Double>();
         private static List<int[]> dataSetLines;
 
+        private static MySqlConnection conn;
+
         static void Main(string[] args)
         {
             if(args.Length != 1)
             {
                 Console.WriteLine("AssociationMiner [Frequency]");
-                return;
+                while (true) ;
             }
+
             List<string> fileLines = new List<string>();	
             //READ LINES - IN MY CASE READ IN DATABASE ENTRIES
+
+            string connStr = "server=localhost;user=root;database=lbms;port=3306;password=tiger0915;";
+            conn = new MySqlConnection(connStr);
+            try
+            {
+                Console.WriteLine("Connecting to MySQL...");
+                conn.Open();
+                // Perform database operations
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            conn.Close();
+            Console.WriteLine("Done.");
+
+            //////////////////////////////////////////////////
 		
-		    int maxValue = getMaxValue(fileLines);
-		    dataSetLines = convertEntriesToIntArrays(fileLines);
+            //int maxValue = getMaxValue(fileLines);
+            dataSetLines = convertEntriesToIntArrays(fileLines);
 		
-		    bool continueRun = true;
-		    int count = 1;
-		    while(continueRun)
-		    {
-			    getFrequencyNumbers(count);
+            bool continueRun = true;
+            int count = 1;
+            while(continueRun)
+            {
+                getFrequencyNumbers(count);
 			
-			    trimMap(count);
+                trimMap(count);
 			
-			    continueRun = getStatus(count);
-			    count++;
-		    }
+                continueRun = getStatus(count);
+                count++;
+            }
 		
-		    //int count = 0;
-		    //for(int numFreq : numberFrequencies)
-		    //{
-		    //	System.out.println(count + " FREQ: " + numFreq);
-		    //	count++;
-		    //}
+            //int count = 0;
+            //for(int numFreq : numberFrequencies)
+            //{
+            //    System.out.println(count + " FREQ: " + numFreq);
+            //    count++;
+            //}
         }
 
-        public static int getMaxValue(List<String> fileLines)
-	    {
-		    int maxValue = 0;
-            //for(String line : fileLines)
-            //{
-            //    String[] splitFileLine = line.split(" ");
-            //    for(String lineSec : splitFileLine)
-            //    {
-            //        String trimLineSec = lineSec.trim();
-            //        int tempValue = -1;
-            //        try
-            //        {
-            //            tempValue = Integer.parseInt(trimLineSec);
-            //        }
-            //        catch (NumberFormatException e)
-            //        {
-            //            e.printStackTrace();
-            //        }
-            //        if(tempValue > maxValue)
-            //            maxValue = tempValue;
-            //    }
-            //}
-		    return maxValue;
-	    }
+        //public static int getMaxValue(List<String> fileLines)
+        //{
+        //    int maxValue = 0;
+        //    for(String line : fileLines)
+        //    {
+        //        String[] splitFileLine = line.split(" ");
+        //        for(String lineSec : splitFileLine)
+        //        {
+        //            String trimLineSec = lineSec.trim();
+        //            int tempValue = -1;
+        //            try
+        //            {
+        //                tempValue = Integer.parseInt(trimLineSec);
+        //            }
+        //            catch (NumberFormatException e)
+        //            {
+        //                e.printStackTrace();
+        //            }
+        //            if(tempValue > maxValue)
+        //                maxValue = tempValue;
+        //        }
+        //    }
+        //    return maxValue;
+        //}
 
         public static void trimMap(int count)
 	    {

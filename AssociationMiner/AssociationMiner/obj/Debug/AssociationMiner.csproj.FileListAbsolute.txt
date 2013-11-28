@@ -1,2 +1,8 @@
 c:\users\jbrel_000\documents\visual studio 2012\Projects\AssociationMiner\AssociationMiner\bin\Debug\AssociationMiner.exe.config
 C:\Users\jbrel_000\Documents\GitHub\SQL_LBMS\AssociationMiner\AssociationMiner\bin\Debug\AssociationMiner.exe.config
+C:\Users\jbrel_000\Documents\GitHub\SQL_LBMS\AssociationMiner\AssociationMiner\bin\Debug\AssociationMiner.exe
+C:\Users\jbrel_000\Documents\GitHub\SQL_LBMS\AssociationMiner\AssociationMiner\bin\Debug\AssociationMiner.pdb
+C:\Users\jbrel_000\Documents\GitHub\SQL_LBMS\AssociationMiner\AssociationMiner\bin\Debug\MySql.Data.dll
+C:\Users\jbrel_000\Documents\GitHub\SQL_LBMS\AssociationMiner\AssociationMiner\obj\Debug\AssociationMiner.exe
+C:\Users\jbrel_000\Documents\GitHub\SQL_LBMS\AssociationMiner\AssociationMiner\obj\Debug\AssociationMiner.pdb
+C:\Users\jbrel_000\Documents\GitHub\SQL_LBMS\AssociationMiner\AssociationMiner\obj\Debug\AssociationMiner.csprojResolveAssemblyReference.cache
