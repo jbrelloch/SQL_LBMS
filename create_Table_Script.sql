@@ -51,3 +51,43 @@ CREATE TABLE transactions (
   FOREIGN KEY (`o_id`) REFERENCES orders(`o_id`),
   FOREIGN KEY (`b_id`) REFERENCES books(`b_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE frequentItems1 (
+  `b_id` int(10) unsigned NOT NULL,
+  `frequency` double,
+  PRIMARY KEY (`b_id`),
+  FOREIGN KEY (`b_id`) REFERENCES books(`b_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE frequentItems2 (
+  `b_id1` int(10) unsigned NOT NULL,
+  `b_id2` int(10) unsigned NOT NULL,
+  `frequency` double,
+  PRIMARY KEY (`b_id1`,`b_id2`),
+  FOREIGN KEY (`b_id1`) REFERENCES books(`b_id`),
+  FOREIGN KEY (`b_id2`) REFERENCES books(`b_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE frequentItems3 (
+  `b_id1` int(10) unsigned NOT NULL,
+  `b_id2` int(10) unsigned NOT NULL,
+  `b_id3` int(10) unsigned NOT NULL,
+  `frequency` double,
+  PRIMARY KEY (`b_id1`,`b_id2`,`b_id3`),
+  FOREIGN KEY (`b_id1`) REFERENCES books(`b_id`),
+  FOREIGN KEY (`b_id2`) REFERENCES books(`b_id`),
+  FOREIGN KEY (`b_id3`) REFERENCES books(`b_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE frequentItems4 (
+  `b_id1` int(10) unsigned NOT NULL,
+  `b_id2` int(10) unsigned NOT NULL,
+  `b_id3` int(10) unsigned NOT NULL,
+  `b_id4` int(10) unsigned NOT NULL,
+  `frequency` double,
+  PRIMARY KEY (`b_id1`,`b_id2`,`b_id3`,`b_id4`),
+  FOREIGN KEY (`b_id1`) REFERENCES books(`b_id`),
+  FOREIGN KEY (`b_id2`) REFERENCES books(`b_id`),
+  FOREIGN KEY (`b_id3`) REFERENCES books(`b_id`),
+  FOREIGN KEY (`b_id4`) REFERENCES books(`b_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
