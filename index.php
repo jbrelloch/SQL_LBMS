@@ -134,16 +134,14 @@
 	        </div>
 		
 			<div id="hidden_div" style="display:none;">
-				<form name='registration' class="form-horizontal" action="<?php $_SERVER['PHP_SELF'];?>" method="POST">
+				<form name='registration' class="form-inline" action="<?php $_SERVER['PHP_SELF'];?>" method="POST">
+
+					<input type="text" id="eid" name="emailId" size="20" class="input-small" placeholder="Email"/>&nbsp;
+				
+					<input type="password" id="pid" name="passwd" size="20" class="input-small" placeholder="Password"/>&nbsp;
 					
-					<label>	EmailID: &nbsp;</label>
-					<input type="text" id="eid" name="emailId" size="20"/>&nbsp;
-					
-					<label>	Password:  &nbsp;</label>
-					<input type="password" id="pid" name="passwd" size="20"/>&nbsp;
-					
-					<input type="submit" value="Submit" class="btn btn-small"/></td>
-					<input type="submit" value="Cancel" onclick="Clear(); showHide(); return false;" class="btn btn-mini">
+					<input type="submit" value="Submit" class="btn-small"/></td>
+					<input type="submit" value="Cancel" onclick="Clear(); showHide(); return false;" class="btn-mini">
 				</form>
 			</div>
       	</div>
