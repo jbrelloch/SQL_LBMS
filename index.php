@@ -7,8 +7,6 @@
 		$mid = $_SESSION['mid'];
 		$fname = $_SESSION['fname'];
 	}else{
-
-
 		//connect database
 		$dbHost = "localhost";
 		$dbUser = "root";
@@ -39,7 +37,7 @@
 				$_SESSION['passwd'] = $valid_arr['passwd'];
 				$password = md5($valid_arr['passwd']);
 				//$user_query = mysql_query("SELECT * FROM members where email = '{$_SESSION['emailId']}'") or die("Unable to connect to query");
-				//$usertype_query = mysql_query("SELECT usertype FROM users where userid = '{$_SESSION['userID']}' AND `password` = '{$_SESSION['passwd']}'") or die("Unable to connect to query");
+				$usertype_query = mysql_query("SELECT admin FROM members where email = '{$_SESSION['emailId']}' AND `password` = '$password'") or die("Unable to connect to query");
 				$user_query = mysql_query("SELECT * FROM members where email = '{$_SESSION['emailId']}' AND `password` = '$password'") or die("Unable to connect to query");
 				$query_num_rows = mysql_num_rows($user_query);
 
@@ -50,7 +48,7 @@
 				else if($query_num_rows == 1){
 					while($row = mysql_fetch_array($user_query)) {
 						if ($row['email'] == $_SESSION['emailId']){
-							//$_SESSION['userType']=$row['usertype '];
+							$_SESSION['userType'] = $row['admin'];
 							$_SESSION['mid'] = $row['m_id'];
 							$_SESSION['fname'] = $row['first_name'];
 							$error_arr['passwd'] = $_SESSION['fname'];
@@ -106,6 +104,10 @@
 			<div class="navbar-header">
 	          	<a href="registration.php" class="navbar-brand">Sign Up</a>
 	        </div>
+			<div >
+				<a href="addBook.php" class="navbar-brand"> <?php echo isset($_SESSION['userType']) ? "Add Books" : "" ?> </a>
+			</div>		
+			
 	        <div class="navbar-collapse collapse" id="navbar-main">
 	        	<ul class="nav navbar-nav">
 		            <li class="dropdown">
@@ -130,20 +132,22 @@
 					<a href=\"logout.php\">Logout</a>" : "<a onclick=\"showHide();\">Login</a>"); ?> 
 					</li>
 				</ul>
+				<div id="hidden_div" style="display:none;padding-top:10px;padding-left:20px;" class="navbar-header">
+					<form name='registration' class="form-inline" action="<?php $_SERVER['PHP_SELF'];?>" method="POST">
 
+						<input type="text" id="eid" name="emailId" size="20" class="input-small" placeholder="Email"/>&nbsp;
+					
+						<input type="password" id="pid" name="passwd" size="20" class="input-small" placeholder="Password"/>&nbsp;
+						
+						<input type="submit" value="Submit" class="btn-small"/></td>
+						<input type="submit" value="Cancel" onclick="Clear(); showHide(); return false;" class="btn-mini">
+					</form>
+				</div>
+				
+				
 	        </div>
 		
-			<div id="hidden_div" style="display:none;">
-				<form name='registration' class="form-inline" action="<?php $_SERVER['PHP_SELF'];?>" method="POST">
 
-					<input type="text" id="eid" name="emailId" size="20" class="input-small" placeholder="Email"/>&nbsp;
-				
-					<input type="password" id="pid" name="passwd" size="20" class="input-small" placeholder="Password"/>&nbsp;
-					
-					<input type="submit" value="Submit" class="btn-small"/></td>
-					<input type="submit" value="Cancel" onclick="Clear(); showHide(); return false;" class="btn-mini">
-				</form>
-			</div>
       	</div>
 	</div>
 

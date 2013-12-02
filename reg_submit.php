@@ -28,7 +28,7 @@
 	 	 
 	 
 	  $query1 = "select m_id from members where email = '$email' ";
-	  $query2 = "insert into members(email, password, first_name, last_name, date_of_birth) VALUES ('$email', '$passwd', '$fname','$lname','$str_dob')";
+	  $query2 = "insert into members(email, password, first_name, last_name, date_of_birth, admin) VALUES ('$email', '$passwd', '$fname','$lname','$str_dob', '0')";
 	  $query3 = "select m_id from members where email = '$email' ";
 	  
 	  
