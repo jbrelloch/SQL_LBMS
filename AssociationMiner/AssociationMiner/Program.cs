@@ -23,21 +23,27 @@ namespace AssociationMiner
 
         static void Main(string[] args)
         {
-            if(args.Length != 3)
+            if (args.Length != 3 && args.Length != 4)
             {
-                Console.WriteLine("AssociationMiner [database username] [database password] [Frequency]");
+                Console.WriteLine("AssociationMiner [Frequency] [database name] [database username] [database password (optional)]");
                 return ;
             }
 
             requiredFrequency = Double.Parse(args[0]);
-            string username = args[1];
-            string password = args[2];
+            string dbname = args[1];
+            string username = args[2];
+            string password = "";
+            if(args.Length == 4)
+                password = args[3];
 
             //List<string> fileLines = new List<string>();	
             OrderList = new List<Order>();
             //READ LINES - IN MY CASE READ IN DATABASE ENTRIES
 
-            string connStr = "server=localhost;user="+username+";database=lbms;port=3306;password="+password+";";
+            string connStr = "server=localhost;user=" + username + ";database=" + dbname + ";port=3306;";
+            if(args.Length == 4)
+                connStr = String.Concat(connStr,"password=" + password + ";");
+
             conn = new MySqlConnection(connStr);
             try
             {
@@ -216,7 +222,7 @@ namespace AssociationMiner
             conn.Close();
             Console.WriteLine("Done.");
 
-            return;
+             return;
 		
             //int count = 0;
             //for(int numFreq : numberFrequencies)

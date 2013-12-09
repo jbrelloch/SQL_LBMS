@@ -31,6 +31,8 @@ CREATE TABLE books (
   `isbn` varchar(50) DEFAULT NULL,
   `quantity` int(10) unsigned,
   `subject` varchar(50) DEFAULT NULL,
+  `details` varchar(1000) DEFAULT NULL,
+  `imageurl` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`b_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
