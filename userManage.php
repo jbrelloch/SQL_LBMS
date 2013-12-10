@@ -164,26 +164,26 @@
 									if((($offsetVal+1)*20) < $result_count)
 										echo '<ul class="pager">
 									            <li class="previous"><a href="userManage.php">&lt Prev</a></li>
-									            <li class="next"><a href="userManage.php?offset="'.($offsetVal+1).'">Next &gt</a></li>
-									          </ul>';
+									            <li class="next"><a href="userManage.php?offset='.($offsetVal+1).'">Next &gt</a></li>
+									          </ul>1';
 									else
 										echo '<ul class="pager">
 									            <li class="previous"><a href="userManage.php">&lt Prev</a></li>
 									            <li class="next disabled"><a href="#">Next &gt</a></li>
-									          </ul>';
+									          </ul>2';
 								}
 								else
 								{
 									if((($offsetVal+1)*20) < $result_count)
 										echo '<ul class="pager">
-									            <li class="previous"><a href="userManage.php?offset='.($offsetVal-1).'>&lt Prev</a></li>
-									            <li class="next"><a href="userManage.php?offset="'.($offsetVal+1).'">Next &gt</a></li>
-									          </ul>';
+									            <li class="previous"><a href="userManage.php?offset='.($offsetVal-1).'">&lt Prev</a></li>
+									            <li class="next"><a href="userManage.php?offset='.($offsetVal+1).'">Next &gt</a></li>
+									          </ul>3';
 									else
 										echo '<ul class="pager">
-									            <li class="previous"><a href="userManage.php?offset='.($offsetVal-1).'>&lt Prev</a></li>
+									            <li class="previous"><a href="userManage.php?offset='.($offsetVal-1).'"">&lt Prev</a></li>
 									            <li class="next disabled"><a href="#">Next &gt</a></li>
-									          </ul>';
+									          </ul>4';
 								}
 							}
 							else
@@ -192,7 +192,7 @@
 									echo '<ul class="pager">
 								            <li class="previous disabled"><a href="#">&lt Prev</a></li>
 								            <li class="next"><a href="userManage.php?offset=1">Next &gt</a></li>
-								          </ul>';
+								          </ul>5';
 							}
 						?>
 					</div><!-- /example -->

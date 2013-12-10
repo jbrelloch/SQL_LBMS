@@ -117,6 +117,8 @@ namespace AssociationMiner
             }
             Console.WriteLine("Finished mining.");
 
+            //////////////////////////////////////////////////
+
             try
             {
                 Console.WriteLine("Connecting to MySQL...");

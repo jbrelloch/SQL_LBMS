@@ -270,7 +270,7 @@
 									if((($offsetVal+1)*20) < $result_count)
 										echo '<ul class="pager">
 									            <li class="previous"><a href="browse.php?category='.$str.'">&lt Prev</a></li>
-									            <li class="next"><a href="browse.php?category='.$str.'&offset="'.($offsetVal+1).'">Next &gt</a></li>
+									            <li class="next"><a href="browse.php?category='.$str.'&offset='.($offsetVal+1).'">Next &gt</a></li>
 									          </ul>';
 									else
 										echo '<ul class="pager">
@@ -282,12 +282,12 @@
 								{
 									if((($offsetVal+1)*20) < $result_count)
 										echo '<ul class="pager">
-									            <li class="previous"><a href="browse.php?category='.$str.'&offset='.($offsetVal-1).'>&lt Prev</a></li>
-									            <li class="next"><a href="browse.php?category='.$str.'&offset="'.($offsetVal+1).'">Next &gt</a></li>
+									            <li class="previous"><a href="browse.php?category='.$str.'&offset='.($offsetVal-1).'"">&lt Prev</a></li>
+									            <li class="next"><a href="browse.php?category='.$str.'&offset='.($offsetVal+1).'">Next &gt</a></li>
 									          </ul>';
 									else
 										echo '<ul class="pager">
-									            <li class="previous"><a href="browse.php?category='.$str.'&offset='.($offsetVal-1).'>&lt Prev</a></li>
+									            <li class="previous"><a href="browse.php?category='.$str.'&offset='.($offsetVal-1).'"">&lt Prev</a></li>
 									            <li class="next disabled"><a href="#">Next &gt</a></li>
 									          </ul>';
 								}
