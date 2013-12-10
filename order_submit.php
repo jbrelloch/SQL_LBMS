@@ -5,71 +5,43 @@
 	$dbUser = "root";
 	$dbPass = "";
 	$dbname = "bookstore";
-	$con=mysqli_connect($dbHost, $dbUser, $dbPass, $dbname);
+	$dbconnect = mysql_connect($dbHost,$dbUser,$dbPass)	or die("Unable to connect to MySQL");
+	mysql_select_db($dbname,$dbconnect);
 
 	// Check connection
 	if (mysqli_connect_errno($con)){
 		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		header('Location: index.php');
 	}
 
-	 $mid= $_POST['mid'];
-	 $fname = $_POST['firstName'];
-	 $lname = $_POST['lastName'];
-	 $passwd = $_POST['password'];
-	 $line1 = $_POST['line1'];
-	 $line2 = $_POST['line2'];
-	 $line3 = $_POST['line3'];
-	 $city = $_POST['city'];
-	 $state = $_POST['state'];
-	 $zipcode = $_POST['zip'];
-	 $email = $_POST['email'];
-	 $dob = $_POST['dob'];
-	 $str_dob = date('Y-m-d',strtotime($dob));
-	 	 
-	 
-	  $query1 = "select m_id from members where email = '$email' ";
-	  $query2 = "insert into members(email, password, first_name, last_name, date_of_birth, admin) VALUES ('$email', '$passwd', '$fname','$lname','$str_dob', '0')";
-	  $query3 = "select m_id from members where email = '$email' ";
-	  
-	  
+	foreach ($_SESSION['cart'] as $key => $value) {
+		$result = mysql_query("SELECT * FROM books WHERE `b_id` = '".$key."'") or die("Unable to connect to query");
+		$result_count = mysql_num_rows($result);
 
-	  echo 'query1'.$query1.'<br><br>';
-	  
-	 
-	  $result1 = mysqli_query($con,$query1);
+		$currentQuantity = 0;
 
-	  $row_cnt = mysqli_num_rows($result1);
-	 if(mysqli_num_rows($result1)){
-	 	echo "Member already exists. Please type in a different email address";
-		mysqli_close($con);
-	 }else{ 
-	 	echo 'query2'.$query2.'<br><br>';
-	    $result2 = mysqli_query($con,$query2);
-		if($result2){
-			echo 'query3'.$query3.'<br><br>';
-	   		$result3 = mysqli_query($con,$query3);
-			while($row = mysqli_fetch_array($result3)){
-				echo $row['m_id'];
-				echo "<br>";
-				$email_addr =  $row['m_id'];
-			}
-			$query4 = "insert into addresses(m_id, line_1, city, state) VALUES ('$email_addr', '$line1', '$city', '$state')";
-			$result4 = mysqli_query($con,$query4);
-			echo 'query4'.$query4.'<br><br>';
-			if($result4){
-				mysqli_query('commit');
-				//session_start();
-				$_SESSION['mid'] = $mid;
-				$_SESSION['fname'] = $fname;
-	   			header('Location: index.php'); 	
-			}else{						 						  
-		  		die('Could not insert into database');
-		 		echo "Registration failed";
-				mysqli_close($con);
+		if($result_count == 1)
+		{
+			while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+				$currentQuantity = $row['quantity'];
 			}
 		}
-		else{
-			echo 'database insertion problem';
+		else
+		{
+			echo "Book retrieval error!";
+			header('Location: cart.php?error=book');
+		}
+
+		if($currentQuantity >= $value)
+		{
+			$update = mysql_query("UPDATE books SET `quantity`=".($currentQuantity-$value)." WHERE `b_id` = '".$key."'");
+		}
+		else
+		{
+			echo "ERROR: Not enough books!";
+			header('Location: cart.php?error=quantity');
 		}
 	}
+	unset($_SESSION['cart']);
+	header('Location: index.php');
 ?>

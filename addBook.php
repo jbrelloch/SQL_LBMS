@@ -48,6 +48,8 @@
 	        			echo '<li class="dropdown">'.
 		            			'<a class="dropdown-toggle" data-toggle="dropdown" id="browse">Browse Books <span class="caret"></span></a>'.
 		            			'<ul class="dropdown-menu" aria-labelledby="browse">'.
+			                		'<li><a tabindex="-1" href="browse.php?category=None">All Books</a></li>'.
+			                		'<li class="divider"></li>'.
 			                		'<li><a tabindex="-1" href="browse.php?category=Textbook">Textbooks</a></li>'.
 			                		'<li><a tabindex="-1" href="browse.php?category=Historical">Historical</a></li>'.
 			                		'<li><a tabindex="-1" href="browse.php?category=Biography">Biographies</a></li>'.

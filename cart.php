@@ -83,6 +83,8 @@
 	        			echo '<li class="dropdown">'.
 		            			'<a class="dropdown-toggle" data-toggle="dropdown" id="browse">Browse Books <span class="caret"></span></a>'.
 		            			'<ul class="dropdown-menu" aria-labelledby="browse">'.
+			                		'<li><a tabindex="-1" href="browse.php?category=None">All Books</a></li>'.
+			                		'<li class="divider"></li>'.
 			                		'<li><a tabindex="-1" href="browse.php?category=Textbook">Textbooks</a></li>'.
 			                		'<li><a tabindex="-1" href="browse.php?category=Historical">Historical</a></li>'.
 			                		'<li><a tabindex="-1" href="browse.php?category=Biography">Biographies</a></li>'.
@@ -126,6 +128,19 @@
 		<div class="col-lg-4">
 		</div>
           <div class="col-lg-4">
+          	<p>
+          		<?php
+          		if(isset($_GET['error']))
+          		{
+          			if($_GET['error'] == 'quantity')
+          				echo "ERROR: Not enough books in store!";
+          			elseif($_GET['error'] == 'quantity')
+          				echo "ERROR: Book in cart does not exist!";
+          			else
+          				echo "ERROR: I don't know!";
+          		}
+          		?>
+          	</p>
             <div class="page-header">
               <h1 id="tables">Book Cart</h1>
             </div>

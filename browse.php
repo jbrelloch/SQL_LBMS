@@ -65,6 +65,8 @@
 	        			echo '<li class="dropdown">'.
 		            			'<a class="dropdown-toggle" data-toggle="dropdown" id="browse">Browse Books <span class="caret"></span></a>'.
 		            			'<ul class="dropdown-menu" aria-labelledby="browse">'.
+			                		'<li><a tabindex="-1" href="browse.php?category=None">All Books</a></li>'.
+			                		'<li class="divider"></li>'.
 			                		'<li><a tabindex="-1" href="browse.php?category=Textbook">Textbooks</a></li>'.
 			                		'<li><a tabindex="-1" href="browse.php?category=Historical">Historical</a></li>'.
 			                		'<li><a tabindex="-1" href="browse.php?category=Biography">Biographies</a></li>'.
@@ -108,7 +110,34 @@
     <div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 id="tables"><?php echo $_GET["category"]; ?></h1>
+					<h1 id="tables"><?php echo ($_GET["category"] == 'None') ? "All Books" : $_GET["category"]; ?></h1>
+					
+		            <div class="well">
+		            	<form class="bs-example form-horizontal" action="browse.php" method="get">
+		                	<fieldset>
+		                		<legend>Search</legend>
+		                		<div class="form-group">
+		                    		<div class="col-lg-4">
+		                      			<input type="text" class="form-control" id="inputEmail" placeholder="ISBN" name="ISBN">
+		                   			</div>
+		                    		<div class="col-lg-4">
+		                      			<input type="text" class="form-control" id="inputTitle" placeholder="Title" name="Title">
+		                   			</div>
+		                    		<div class="col-lg-4">
+		                      			<input type="text" class="form-control" id="inputAuthor" placeholder="Author" name="Author">
+		                   			</div>
+		                   			<input type="hidden" id="inputCategory" value="<?php echo $_GET['category']?>" name="category">
+		                    		<div class="col-lg-4">
+		                   			</div>
+		                    		<div class="col-lg-4" style="text-align:center;"><br/>
+  										<input type="submit" class="btn btn-primary" value="Submit">	
+		                   			</div>
+		                    		<div class="col-lg-4">
+		                   			</div>
+		                  		</div>
+		                  	</fieldset>
+		                </form>
+		            </div>
 
 					<div class="bs-example table-responsive">
 						<table class="table table-striped table-bordered table-hover">
@@ -117,23 +146,82 @@
 									<th>ISBN</th>
 									<th>Title</th>
 									<th>Author</th>
+									<th>Subject</th>
 									<th>Quantity Remaining</th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php
 									require 'connect.php';
-									$str = $_GET['category'];
+									$cat = $_GET['category'];
+
+									$queryStr = "SELECT * FROM books";
+									$where = false;
+									if($cat != 'None')
+									{
+										if(!$where)
+										{
+											$queryStr = $queryStr." WHERE `subject` = '$cat'";
+											$where = true;
+										}
+										else
+										{
+											$queryStr = $queryStr." AND `subject` = '$cat'";											
+										}
+									}
+									if(isset($_GET['ISBN']) && $_GET['ISBN'] != "")
+									{
+										$isbn = $_GET['ISBN'];
+										if(!$where)
+										{
+											$queryStr = $queryStr." WHERE `isbn` = '$isbn'";	
+											$where = true;
+										}
+										else
+										{
+											$queryStr = $queryStr." AND `isbn` = '$isbn'";											
+										}
+									}
+									if(isset($_GET['Title']) && $_GET['Title'] != "")
+									{
+										$title = $_GET['Title'];
+										if(!$where)
+										{
+											$queryStr = $queryStr." WHERE `title` = '$title'";	
+											$where = true;
+										}
+										else
+										{
+											$queryStr = $queryStr." AND `title` = '$title'";											
+										}
+									}
+									if(isset($_GET['Author']) && $_GET['Author'] != "")
+									{
+										$author = $_GET['Author'];
+										if(!$where)
+										{
+											$queryStr = $queryStr." WHERE `author` = '$author'";	
+											$where = true;
+										}
+										else
+										{
+											$queryStr = $queryStr." AND `author` = '$author'";										
+										}
+									}
 									if(isset($_GET['offset']))
 									{
 										$offsetVal = $_GET['offset'];
 										$totalOffset = $offsetVal * 20;
-										$result = mysql_query("SELECT * FROM books WHERE `subject` = '$str' LIMIT $totalOffset,20") or die("Unable to connect to query");
+
+										$queryStr = $queryStr." LIMIT $totalOffset,20";	
 									}
 									else
 									{
-										$result = mysql_query("SELECT * FROM books WHERE `subject` = '$str' LIMIT 20") or die("Unable to connect to query");
+										$queryStr = $queryStr." LIMIT 20";	
 									}
+									echo $queryStr;
+
+									$result = mysql_query($queryStr) or die("Unable to connect to query");
 									$result_count = mysql_num_rows($result);
 
 									while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
@@ -142,6 +230,7 @@
 									    		'<td>'.$row["isbn"].'</td>'.
 									    		'<td>'.$row["title"].'</td>'.
 									    		'<td>'.$row["author"].'</td>'.
+									    		'<td>'.$row["subject"].'</td>'.
 									    		'<td>'.$row["quantity"].'</td>'.
 									    		'<td>'.
 									    			'<div class="btn-group">'.
@@ -163,7 +252,14 @@
 						<?php 
 							require 'connect.php';
 							$str = $_GET['category'];
-							$result = mysql_query("SELECT * FROM books WHERE `subject` = '$str'") or die("Unable to connect to query");
+
+							$queryStr = "SELECT * FROM books";
+							if($str != 'None')
+							{
+								$queryStr = $queryStr." WHERE `subject` = '$str'";
+							}
+
+							$result = mysql_query($queryStr) or die("Unable to connect to query");
 							$result_count = mysql_num_rows($result);
 
 							if(isset($_GET['offset']))
@@ -202,6 +298,11 @@
 									echo '<ul class="pager">
 								            <li class="previous disabled"><a href="#">&lt Prev</a></li>
 								            <li class="next"><a href="browse.php?category='.$str.'&offset=1">Next &gt</a></li>
+								          </ul>';
+								else
+									echo '<ul class="pager">
+								            <li class="previous disabled"><a href="#">&lt Prev</a></li>
+								            <li class="next disabled"><a href="#">Next &gt</a></li>
 								          </ul>';
 							}
 						?>
